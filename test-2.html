@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        /* 在标签中设置宽高，会导致图像拉伸 */
+        /* canvas {
+            width: 1000px;
+            height: 800px;
+        } */
+    </style>
+    <script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /** @type {HTMLCanvasElement} */
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext("2d");
+            canvas.width = 800;
+            canvas.height = 500;
+            // ctx.save();
+            // ctx.fillStyle = "rgb(63, 169, 245)";
+            // ctx.fillRect(50, 50, 100, 100);
+
+            // //合成
+            // ctx.globalAlpha = 0.5; //透明度 值为0到1
+
+            
+            // Source来源  destination目标   源是绘制的新图形  目标是 已经绘制了图形的2D渲染上下文
+            // ctx.globalCompositeOperation = "source-over"; //默认值 表示 绘制的图形（源） 将画在现有画布（目标）之上
+            // ctx.globalCompositeOperation = "destination-over"; //表示 目标绘制在源之上
+            // ctx.globalCompositeOperation = "source-out"; //表示 将源绘制在目标之上，在重叠区域两者都不透明。绘制在其他位置的目标是不透明的，但源是透明的
+        
+            // ctx.fillStyle = "rgb(255, 123, 172)";
+            // ctx.fillRect(100, 100, 100, 100)
+            
+            // ctx.restore();
+            // ctx.fillStyle = "rgb(255, 123, 172)";
+            // ctx.shadowBlur = 0;
+            // // ctx.shadowColor = 
+            // ctx.shadowOffsetX = 10;
+            // ctx.shadowOffsetY = 10;
+            // ctx.shadowColor = "rgb(100, 100, 100, 0.5)";
+            // ctx.fillRect(250, 250, 50, 50);
+
+            // ctx.quadraticCurveTo()
+            // ctx.bezierCurveTo()
+
+            ctx.save();
+            ctx.fillRect(100, 100, 100, 100);
+
+            ctx.fillStyle = "rgb(250, 0, 0)";
+            ctx.fillRect(150, 150, 100, 100);
+
+            ctx.restore();
+            ctx.fillRect(200, 200, 100, 100);
+
+            var dataURL = canvas.toDataURL();
+            var img = $("<img></img>");
+            img.attr("src", dataURL)
+            $(canvas).replaceWith(img);
+
+            // ctx.drawImage(img, x, y)
+
+        })
+        
+    </script>
+</head>
+<body>
+    <canvas id="myCanvas">
+
+    </canvas>
+</body>
+</html>

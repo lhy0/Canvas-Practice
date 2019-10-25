@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // var myCanvas = $("#myCanvas");
+            // var context = myCanvas.get(0).getContext("2d");
+            var myCanvas = document.getElementById("myCanvas");
+            var context = myCanvas.getContext("2d")
+            context.fillRect(40, 40, 100, 50) 
+            context.strokeRect(100, 100, 100, 50)
+
+            // 绘制线条
+            context.beginPath(); //开始路径
+            context.moveTo(300, 200); //设置路径原点
+            context.lineTo(400, 600); //设置路径终点
+            context.closePath(); //结束路径
+            context.stroke(); //输出路径轮廓
+
+            //绘制圆形
+            context.beginPath();               
+            context.arc(200, 100, 100, 0, Math.PI, true); // arc(x,y,radius,startAngle,endAngle,anticlockwise) 圆心坐标 圆弧半径 开始角度 结束角度 是否逆时针
+            context.closePath(); 
+            context.fill(); //fill 与 stroke类似
+
+            //填充颜色
+            context.fillStyle = "rgb(250,0,0)"
+            context.fillRect(40, 50, 100, 50) 
+
+            //描边颜色
+            context.strokeStyle = "rgb(250,0,0)"
+            context.strokeRect(200, 100, 50, 50) 
+
+            //线宽
+            context.lineWidth = 5;
+            context.strokeStyle = "rgb(250,0,0)"
+            context.strokeRect(300, 300, 50, 50)
+
+            //擦除
+            context.clearRect(40, 50, 50, 50)
+        })
+        
+    </script>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="800">
+
+    </canvas>
+</body>
+</html>

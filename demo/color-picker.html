@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            padding-left: 50px;
+        }
+        #colorbox {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /** @type {HTMLCanvasElement} */
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext("2d");
+            canvas.width = 800;
+            canvas.height = 500;
+
+            var img = new Image();
+            img.src = "./img/11.jpg";
+            img.onload = function(e) {
+                ctx.drawImage(img, 0, 0, 100, 100, 50, 5, 300, 300);
+            }
+            canvas.onclick = function(e) {
+                var cx = Math.floor(e.pageX - canvas.offsetLeft); 
+                var cy = Math.floor(e.pageY - canvas.offsetTop); 
+                var pixel = ctx.getImageData(cx, cy, 1, 1).data;
+                var colorbox = document.getElementById("colorbox");
+                var colorData = document.getElementById("colorData");
+                colorbox.style.backgroundColor = `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${pixel[3]})`;
+                colorData.innerHTML = `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${pixel[3]})`;
+            }
+        })
+        
+    </script>
+</head>
+<body>
+    <div>
+        <span id="colorbox"></span>
+        <span id="colorData">rgba(0, 0, 0, 0)</span>
+    </div>
+    <canvas id="myCanvas">
+
+    </canvas>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       
+    </style>
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /** @type {HTMLCanvasElement} */
+            let canvas = document.getElementById('myCanvas');
+            let ctx = canvas.getContext("2d");
+            canvas.width = 800;
+            canvas.height = 500;
+            let pieChartData = {
+                center: [200, 200],
+                radius: 100,
+                sector: [0.25, 0.2, 0.5, 0.05]
+            }
+            createPieChart(ctx, pieChartData);
+
+            function createPieChart(ctx, pieChartData) {
+                let {center, radius, sector} = pieChartData;
+                let [x, y] = center;
+                let startAngle = 0;
+                for (let i = 0; i < sector.length; i++) {
+                    const percent= sector[i];
+                    let angle1 = startAngle;
+                    let angle2 = startAngle + percent*360;
+                    let color = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+                    createSector(ctx, x, y, radius, angle1, angle2, color);
+                    startAngle = angle2;
+                }
+            }
+            
+            function createSector(ctx, x, y, r, angle1, angle2, color) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, r, angle1/180*Math.PI, angle2/180*Math.PI, false);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+        })
+        
+    </script>
+</head>
+<body>
+    <canvas id="myCanvas">
+
+    </canvas>
+</body>
+</html>
