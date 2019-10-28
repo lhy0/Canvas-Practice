@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       button{
+           border-radius: 3px;
+       }
+    </style>
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /** @type {HTMLVideoElement} */
+            let video = document.getElementById('myVideo');
+            document.getElementById("play").addEventListener("click", function() {
+                video.play()
+            })
+            document.getElementById("stop").addEventListener("click", function() {
+                video.pause();
+            })
+
+            /** @type {HTMLCanvasElement} */
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d"); 
+
+            video.addEventListener("play", function(){
+                drawCanvas();
+            })
+
+            function drawCanvas() {
+                if (video.paused || video.ended) {
+                    return false;
+                }
+                
+                ctx.drawImage(video, 0, 0, 300, 200);
+
+                /* 这部分是进行的像素处理，如果没有这部分，视频将会按原本展示 */
+                let cWidth = canvas.width, cHeight = canvas.height;
+                let imgData = ctx.getImageData(0, 0, cWidth, cHeight);
+                let pixel = imgData.data;
+                ctx.clearRect(0, 0, cWidth, cHeight);
+
+                let numTileCols = 64;
+                let numTileRows = 36;
+
+                let tileWidth = imgData.width/numTileCols;
+                let tileHeight = imgData.height/numTileRows;
+
+                for (let r = 0; r < numTileRows; r++) {
+                    for (let c = 0; c < numTileCols; c++) {
+                        let x = c*tileWidth + tileWidth/2;
+                        let y = r*tileHeight + tileHeight/2;
+
+                        let pos = Math.floor(y)*(imgData.width*4) + (Math.floor(x)*4);
+                        let red = pixel[pos];
+                        let green = pixel[pos+1];
+                        let blue = pixel[pos+2];
+
+                        ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+                        ctx.fillRect(x-(tileWidth/2), y-(tileHeight/2), tileWidth, tileHeight)
+                    }
+                }
+                /* ----------------结束--------------------- */
+
+                setTimeout(drawCanvas, 30);
+            }
+        })
+        
+    </script>
+</head>
+<body>
+    <canvas id="myCanvas" width="300" height="200">
+        <video id="myVideo" src="../video/11.mp4" width="300" height="200" controls></video>
+    </canvas>
+    <div>
+        <button id="play">play</button>
+        <button id="stop">stop</button>
+    </div>
+</body>
+</html>
